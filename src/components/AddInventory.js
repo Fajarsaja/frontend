@@ -17,6 +17,12 @@ const AddInventory = () => {
 
     const saveInventory = async (e) =>{
         e.preventDefault();
+
+        if (!no_penjualan || !tgl_penjualan || !nama_barang || !qty || !harga || !subtotal || !keterangan) {
+            alert('pastikan semua kolom sudah di isi...');
+            return;
+        }
+
         try{
             await axios.post("http://localhost:5000/t_penjualan",{
                 no_penjualan,
