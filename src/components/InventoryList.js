@@ -34,7 +34,7 @@ const InventoryList = () => {
     <div className='columns mt-5 is-justify-content-center'>
         <div className="column is-half ">
             <Link to={`Add`} className='button is-success mb-5'>Tambah data</Link>
-            <table className='table is-center is-triped is-fullwitdh is-1 table-cell-padding table-cell-border-width'>
+            <table className='table is-center is-hoverable is-triped is-fullwitdh is-1 table-cell-padding table-cell-border-width'>
                 <thead>
                     <tr>
                         <th>no</th>
@@ -50,7 +50,8 @@ const InventoryList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {inventory.map((inventory, index) => (
+                {inventory.length > 0 ? (
+                    inventory.map((inventory, index) => (
                          <tr key={inventory.id}>
                          <td>{index +1}</td>
                          <td>{inventory.no_penjualan}</td>
@@ -67,7 +68,13 @@ const InventoryList = () => {
                             <button onClick={() => deleteInventory(inventory.id)} className='button is-small is-danger'>delete</button>
                          </td>
                      </tr>
-                    ))}
+                     
+                    ) )
+                        ) : (
+                            <tr>
+                                <td colSpan="10">Data tidak ada</td>
+                            </tr>
+                )}
                    
                 </tbody>
             </table>

@@ -13,13 +13,32 @@ const AddInventory = () => {
     const [harga, setHarga] = useState("");
     const [subtotal, setSubtotal] = useState("");
     const [keterangan, setKeterangan] = useState("");
+
     const navigate = useNavigate();
+
+    const checkNoPenjualanExists = async (noPenjualan) => {
+        try {
+            const response = await axios.get(`http://localhost:5000/t_penjualan/check/${noPenjualan}`);
+            return response.data.exists;
+        } catch (error) {
+            console.error('Error checking no_penjualan:', error);
+            return false; 
+        }
+    }
 
     const saveInventory = async (e) =>{
         e.preventDefault();
 
         if (!no_penjualan || !tgl_penjualan || !nama_barang || !qty || !harga || !subtotal || !keterangan) {
             alert('pastikan semua kolom sudah di isi...');
+            return;
+        }
+
+        const exists = await checkNoPenjualanExists(no_penjualan);
+        
+
+        if (exists) {
+            alert('Nomor penjualan sudah ada');
             return;
         }
 
