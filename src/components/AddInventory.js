@@ -69,49 +69,49 @@ const AddInventory = () => {
                 <div className='field'>
                     <label className='label'>nomor penjualan</label>
                     <div className='control'>
-                        <input type="text" className="input is-focused" placeholder='no penjualan'
+                        <input type="text" className="input field has-addons" placeholder='no penjualan'
                         value={no_penjualan} onChange={(e) => setNoPenjualan(e.target.value)} />
                     </div>
                 </div>
                 <div className='field'>
                     <label className='label'>tanggal</label>
                     <div className='control'>
-                        <input type="date" className="input is-focused" placeholder='tanggal penjualan'
+                        <input type="date" className="input field has-addons" placeholder='tanggal penjualan'
                          value={tgl_penjualan} onChange={(e) => setTangal(e.target.value)} />
                     </div>
                 </div>
                 <div className='field'>
                     <label className='label'>nama barang</label>
                     <div className='control'>
-                        <input type="text" className="input is-focused" placeholder='nama barang'
+                        <input type="text" className="input field has-addons" placeholder='nama barang'
                          value={nama_barang} onChange={(e) => setNamaBarang(e.target.value)} />
                     </div>
                 </div>
                 <div className='field'>
                     <label className='label'>QTY</label>
                     <div className='control'>
-                        <input type="number" className="input is-focused" placeholder='qty'
+                        <input type="number" className="input field has-addons" placeholder='qty'
                          value={qty} onChange={(e) => setQty(e.target.value)} />
                     </div>
                 </div>
                 <div className='field'>
                     <label className='label'>harga </label>
                     <div className='control'>
-                        <input type="number" className="input is-focused" placeholder='harga' 
+                        <input type="number" className="input field has-addons" placeholder='harga' 
                          value={harga} onChange={(e) => setHarga(e.target.value)}/>
                     </div>
                 </div>
                 <div className='field'>
                     <label className='label'>subtotal</label>
                     <div className='control'>
-                        <input type="number" className="input is-focused" placeholder='subtotal'
+                        <input type="number" className="input field has-addons" placeholder='subtotal'
                          value={subtotal} onChange={(e) => setSubtotal(e.target.value)} />
                     </div>
                 </div>
                 <div className='field'>
                     <label className='label'>keterangan</label>
                     <div className='control'>
-                        <input type="text" className="input is-focused" placeholder='keterangan' 
+                        <input type="text" className="input field has-addons" placeholder='keterangan' 
                          value={keterangan} onChange={(e) => setKeterangan(e.target.value)}/>
                     </div>
                 </div>
