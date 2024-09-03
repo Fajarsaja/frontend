@@ -6,7 +6,7 @@ import ReactPaginate from 'react-paginate';
 const InventoryList = () => {
     const [inventory, setInventory] = useState([]);
     const [page, setPage] = useState(0);
-    const [limit, setLimit] = useState(7);
+    const [limit, setLimit] = useState(5);
     const [pages, setPages] = useState(0);
     const [rows, setRows] = useState(0);
     const [keyword, setKeyword] = useState("");
@@ -25,9 +25,6 @@ const InventoryList = () => {
         setPages(response.data.totalPage)
         setRows(response.data.totalRows)
     }
-
-   
-
     const deleteInventory = async (id) => {
         try{
             await axios.delete(`http://localhost:5000/t_penjualan/${id}`)
@@ -38,14 +35,11 @@ const InventoryList = () => {
             
         }
     }
-
     const handleSearch = (e) => {
         e.preventDefault();
         setPage(0)
         setKeyword(query);
     };
-
- 
     const handlePageClick = ({selected}) => {
         setPage(selected);
     };
@@ -54,6 +48,8 @@ const InventoryList = () => {
   return (
     <div className='columns mt-2 mx-auto'>
         <div className="column is-half ">
+            <h1 className='title'>Inventory</h1>
+            <h2 className='subtitle'>List of Inventory</h2>
             <Link to={`Add`} className='button is-success '>Tambah data</Link>
             <div className='container mt-3 mb-3'>
                 <div className='columns'>
