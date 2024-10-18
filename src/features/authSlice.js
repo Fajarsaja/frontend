@@ -1,6 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+axios.interceptors.request.use((config) => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+}, (error) => {
+    return Promise.reject(error);
+});
+
 const initialState = {
     user: null,
     isError: false,
@@ -15,33 +25,47 @@ export const LoginUser = createAsyncThunk("user/loginUser", async (user, thunkAP
             email: user.email,
             password: user.password
         });
+
+        // Simpan token di localStorage setelah login berhasil
+        localStorage.setItem("accessToken", response.data.accessToken);
+        
         return response.data;
     } catch (error) {
         if (error.response) {
             const message = error.response.data.msg || 'Something went wrong';
-            return thunkAPI.rejectWithValue(alert(message));
+            return thunkAPI.rejectWithValue(message);
         } else {
             return thunkAPI.rejectWithValue('Network error');
         }
     }
 });
 
-export const getMe = createAsyncThunk("user/getMe", async (user, thunkAPI) => {
+export const getMe = createAsyncThunk("user/getMe", async (_, thunkAPI) => {
     try {
-        const response = await axios.get('http://localhost:5000/me')
+        // Ambil token dari localStorage atau state management jika sudah disimpan
+        const token = localStorage.getItem("accessToken");
+
+        const response = await axios.get('http://localhost:5000/me', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
         return response.data;
     } catch (error) {
         if (error.response) {
             const message = error.response.data.msg || 'Something went wrong';
-            return thunkAPI.rejectWithValue(alert(message));
+            return thunkAPI.rejectWithValue(message);
         } else {
             return thunkAPI.rejectWithValue('Network error');
         }
     }
 });
 
-export const logOut= createAsyncThunk("user/logOut", async (user, thunkAPI) => {
-        await axios.delete('http://localhost:5000/logout')
+export const logOut= createAsyncThunk("user/logOut", async () => {
+    await axios.delete('http://localhost:5000/logout');
+    // Hapus token dari localStorage saat logout
+    localStorage.removeItem("accessToken");
 });
 
 export const authSlice = createSlice({
@@ -65,7 +89,8 @@ export const authSlice = createSlice({
                 state.isError = true;  
                 state.message = action.payload;
             });
-            // get user login
+        
+        // get user login
         builder
             .addCase(getMe.pending, (state) => {
                 state.isLoading = true;

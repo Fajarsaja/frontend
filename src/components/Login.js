@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; 
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { LoginUser, reset } from '../features/authSlice.js'; 
@@ -15,6 +15,7 @@ const Login = () => {
 
     useEffect(() => {
         if (user || isSuccess) {
+            // Redirect ke dashboard setelah login berhasil
             navigate("/dashboard");
         }
         dispatch(reset());
@@ -71,3 +72,4 @@ const Login = () => {
 };
 
 export default Login;
+ 

@@ -17,24 +17,45 @@ const InventoryList = () => {
     },[page, keyword]);
 
     const getPaginate = async () => {
-        const response = await axios.get(
-            `http://localhost:5000/t_penjualan?search_query=${keyword}&page=${page}&limit=${limit}`
-        )
-        setInventory(response.data.result)
-        setPage(response.data.page)
-        setPages(response.data.totalPage)
-        setRows(response.data.totalRows)
-    }
-    const deleteInventory = async (id) => {
-        try{
-            await axios.delete(`http://localhost:5000/t_penjualan/${id}`)
-            getPaginate();
-        }
-        catch (error) {
+        try {
+            const token = localStorage.getItem("accessToken"); // Pastikan token disimpan di localStorage setelah login
+            const response = await axios.get(
+                `http://localhost:5000/t_penjualan?search_query=${keyword}&page=${page}&limit=${limit}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`, // Tambahkan header Authorization
+                    }
+                }
+            );
+            setInventory(response.data.result);
+            setPage(response.data.page);
+            setPages(response.data.totalPage);
+            setRows(response.data.totalRows);
+        } catch (error) {
             console.log(error);
-            
+        }
+    };
+    
+    
+    const deleteInventory = async (id) => {
+        try {
+            const token = localStorage.getItem("accessToken");
+            await axios.delete(`http://localhost:5000/t_penjualan/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            getPaginate();
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                console.log("Unauthorized. Please login again.");
+                // Redirect to login page if necessary
+            } else {
+                console.log("An error occurred:", error.message);
+            }
         }
     }
+    
     const handleSearch = (e) => {
         e.preventDefault();
         setPage(0)
