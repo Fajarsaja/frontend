@@ -18,19 +18,25 @@ const FormAddUser = () => {
             return;
         }       
         try{
-            await axios.post("http://localhost:5000/users",{
+            const token = localStorage.getItem("accessToken");
+            await axios.post("http://localhost:5000/users",
+            {
                name,
                email,
                password,
                confPassword,
                role
-        });
+            },{
+                headers: {
+                    Authorization: `Bearer ${token}` 
+                }
+            });
         navigate("/users");
-    }  catch(error){
-            setMsg(error.response.data.msg);
-            
+        }  catch(error){
+                setMsg(error.response.data.msg);
+                
+            }
         }
-    }
 
   return (
     <div>

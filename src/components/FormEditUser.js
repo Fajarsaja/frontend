@@ -48,7 +48,12 @@ const FormEditUser = () => {
 
 const getUsersById = async (uuid) => {
     try {
-        const response = await axios.get(`http://localhost:5000/users/${uuid}`);
+        const token = localStorage.getItem("accessToken");
+        const response = await axios.get(`http://localhost:5000/users/${uuid}`,{
+            headers: {
+                Authorization: `Bearer ${token}` 
+            }
+        });
         if (response.data) {
             setName(response.data.name);
             setEmail(response.data.email);

@@ -10,9 +10,18 @@ const Userlist = () => {
   },[])
 
   const getUsers = async () => {
-        const response = await axios.get('http://localhost:5000/users')
-        setUsers(response.data)
+    try {
+        const token = localStorage.getItem("accessToken");
+        const response = await axios.get("http://localhost:5000/users", {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        setUsers(response.data);
+    } catch (error) {
+        console.error('Error fetching users:', error);
     }
+};
 
 
   const deleteUser = async (uuid) => {
