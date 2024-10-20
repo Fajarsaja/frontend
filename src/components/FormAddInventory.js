@@ -18,40 +18,57 @@ const FormAddInventory = () => {
 
     const checkNoPenjualanExists = async (noPenjualan) => {
         try {
-            const response = await axios.get(`http://localhost:5000/t_penjualan/check/${noPenjualan}`);
+            const token = localStorage.getItem('accessToken'); // Pastikan ini sesuai dengan tempat penyimpanan token Anda
+            const response = await axios.get(`http://localhost:5000/t_penjualan/check/${noPenjualan}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
             return response.data.exists;
         } catch (error) {
             console.error('Error checking no_penjualan:', error);
-            return false; 
+            return false;
         }
-    }
-
-    const saveInventory = async (e) =>{
+    };
+    
+    
+    const saveInventory = async (e) => {
         e.preventDefault();
-
+    
         if (!no_penjualan || !tgl_penjualan || !nama_barang || !qty || !harga || !subtotal || !keterangan) {
-            alert('pastikan semua kolom sudah di isi...');
+            alert('Pastikan semua kolom sudah diisi...');
             return;
         }
+    
         const exists = await checkNoPenjualanExists(no_penjualan);
         if (exists) {
             alert('Nomor penjualan sudah ada');
             return;
         }
-        try{
-            await axios.post("http://localhost:5000/t_penjualan",{
-                no_penjualan,
-                tgl_penjualan,
-                nama_barang,
-                qty,
-                harga,
-                subtotal,
-                keterangan,
-        });
-        navigate("/inventory");
-    }  catch(error){
+    
+        try {
+            const token = localStorage.getItem('accessToken'); 
+            await axios.post(
+                "http://localhost:5000/t_penjualan",
+                {
+                    no_penjualan,
+                    tgl_penjualan,
+                    nama_barang,
+                    qty,
+                    harga,
+                    subtotal,
+                    keterangan,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}` 
+                    }
+                }
+            );
+            navigate("/inventory");
+        } catch (error) {
             console.log(error);
-            
+            alert('Terjadi kesalahan saat menyimpan data');
         }
     }
         

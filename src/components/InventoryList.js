@@ -18,12 +18,12 @@ const InventoryList = () => {
 
     const getPaginate = async () => {
         try {
-            const token = localStorage.getItem("accessToken"); // Pastikan token disimpan di localStorage setelah login
+            const token = localStorage.getItem('accessToken'); // Ambil token dari localStorage
             const response = await axios.get(
                 `http://localhost:5000/t_penjualan?search_query=${keyword}&page=${page}&limit=${limit}`,
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`, // Tambahkan header Authorization
+                        Authorization: `Bearer ${token}`
                     }
                 }
             );
@@ -32,9 +32,20 @@ const InventoryList = () => {
             setPages(response.data.totalPage);
             setRows(response.data.totalRows);
         } catch (error) {
-            console.log(error);
+            if (error.response) {
+                // Server mengirimkan respons error (4xx, 5xx)
+                console.log("Server Error:", error.response.data.msg);
+            } else if (error.request) {
+                // Tidak ada respons dari server
+                console.log("No response from server:", error.request);
+            } else {
+                // Error lainnya
+                console.log("Error:", error.message);
+            }
         }
-    };
+    }
+    
+    
     
     
     const deleteInventory = async (id) => {

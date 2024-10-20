@@ -28,6 +28,8 @@ export const LoginUser = createAsyncThunk("user/loginUser", async (user, thunkAP
 
         // Simpan token di localStorage setelah login berhasil
         localStorage.setItem("accessToken", response.data.accessToken);
+        console.log("Access Token:", localStorage.getItem("accessToken"));
+
         
         return response.data;
     } catch (error) {
