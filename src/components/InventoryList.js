@@ -32,7 +32,6 @@ const InventoryList = () => {
             setPages(response.data.totalPage);
             setRows(response.data.totalRows);
         } catch (error) {
-            (error.response)
                 console.log("Server Error:", error.response.data.msg);
         }
     }
