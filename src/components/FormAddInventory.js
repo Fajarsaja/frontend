@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
@@ -15,10 +15,52 @@ const FormAddInventory = () => {
     const [keterangan, setKeterangan] = useState("");
 
     const navigate = useNavigate();
+    useEffect(() => {
+        const getNewNoPenjualan = async () => {
+            try {
+                const token = localStorage.getItem('accessToken');
+                const response = await axios.get('http://localhost:5000/new_no_penjualan', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                setNoPenjualan(response.data.newNoPenjualan);
+            } catch (error) {
+                console.error("Failed to get new no_penjualan:", error);
+            }
+        };
+
+        getNewNoPenjualan();
+    }, []);
+
+    useEffect(() => {
+        if (qty && harga) {
+            setSubtotal(Number(qty) * Number(harga));
+        } else {
+            setSubtotal(0); 
+        }
+    }, [qty, harga]);
+
+   
+    
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('id-ID').format(value);
+    };
+    
+    const handleHargaChange = (e) => {
+        const input = e.target.value.replace(/\./g, '');
+        const numericValue = Number(input);
+        setHarga(numericValue); 
+    };
+    
+    // Tampilkan subtotal diformat di input
+    const formattedSubtotal = formatCurrency(subtotal);
+    const displayHarga = formatCurrency(harga)
+    
 
     const checkNoPenjualanExists = async (noPenjualan) => {
         try {
-            const token = localStorage.getItem('accessToken'); // Pastikan ini sesuai dengan tempat penyimpanan token Anda
+            const token = localStorage.getItem('accessToken'); 
             const response = await axios.get(`http://localhost:5000/t_penjualan/check/${noPenjualan}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -82,8 +124,13 @@ const FormAddInventory = () => {
                 <div className='field'>
                     <label className='label'>nomor penjualan</label>
                     <div className='control'>
-                        <input type="text" className="input field has-addons" placeholder='no penjualan'
-                        value={no_penjualan} onChange={(e) => setNoPenjualan(e.target.value)} />
+                        <input  type="text"
+                                className="input field has-addons"
+                                placeholder='no penjualan'
+                                value={no_penjualan}
+                                onChange={(e) => setNoPenjualan(e.target.value)}
+                                disabled >
+                        </input>
                     </div>
                 </div>
                 <div className='field'>
@@ -110,15 +157,19 @@ const FormAddInventory = () => {
                 <div className='field'>
                     <label className='label'>harga </label>
                     <div className='control'>
-                        <input type="number" className="input field has-addons" placeholder='harga' 
-                         value={harga} onChange={(e) => setHarga(e.target.value)}/>
+                        <input type="text" className="input field has-addons" placeholder='harga' 
+                         value={displayHarga} 
+                         onChange={handleHargaChange}/>
                     </div>
                 </div>
                 <div className='field'>
                     <label className='label'>subtotal</label>
                     <div className='control'>
-                        <input type="number" className="input field has-addons" placeholder='subtotal'
-                         value={subtotal} onChange={(e) => setSubtotal(e.target.value)} />
+                        <input  type="text"
+                                className="input field has-addons"
+                                placeholder='subtotal'
+                                value={formattedSubtotal}
+                                disabled />
                     </div>
                 </div>
                 <div className='field'>

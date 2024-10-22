@@ -18,7 +18,7 @@ const InventoryList = () => {
 
     const getPaginate = async () => {
         try {
-            const token = localStorage.getItem('accessToken'); // Ambil token dari localStorage
+            const token = localStorage.getItem('accessToken'); 
             const response = await axios.get(
                 `http://localhost:5000/t_penjualan?search_query=${keyword}&page=${page}&limit=${limit}`,
                 {
@@ -32,20 +32,25 @@ const InventoryList = () => {
             setPages(response.data.totalPage);
             setRows(response.data.totalRows);
         } catch (error) {
-            if (error.response) {
-                // Server mengirimkan respons error (4xx, 5xx)
+            (error.response)
                 console.log("Server Error:", error.response.data.msg);
-            } else if (error.request) {
-                // Tidak ada respons dari server
-                console.log("No response from server:", error.request);
-            } else {
-                // Error lainnya
-                console.log("Error:", error.message);
-            }
         }
     }
+
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('id-ID').format(value);
+    };
     
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        let day = date.getDate();
+        let month = date.getMonth() + 1;
+        const year = date.getFullYear().toString().slice(-2); 
+        day = day < 10 ? `0${day}` : day;
+        month = month < 10 ? `0${month}` : month;
     
+        return `${day}/${month}/${year}`;
+    };
     
     
     const deleteInventory = async (id) => {
@@ -60,7 +65,7 @@ const InventoryList = () => {
         } catch (error) {
             if (error.response && error.response.status === 401) {
                 console.log("Unauthorized. Please login again.");
-                // Redirect to login page if necessary
+
             } else {
                 console.log("An error occurred:", error.message);
             }
@@ -112,8 +117,8 @@ const InventoryList = () => {
                         <th>tanggal</th>
                         <th>nama barang</th>
                         <th>qty</th>
-                        <th>subtotal</th>
                         <th>harga</th>
+                        <th>subtotal</th>
                         <th>keterangan</th>
                         <th>action</th>
                         <th></th>
@@ -124,12 +129,12 @@ const InventoryList = () => {
                     inventory.map((inventory, index) => (
                          <tr key={inventory.id}>
                          <td>{index +1}</td>
-                         <td>{inventory.no_penjualan}</td>
-                         <td>{inventory.tgl_penjualan}</td>
+                         <td>{String(inventory.no_penjualan).padStart(4, '0')}</td>
+                         <td>{formatDate(inventory.tgl_penjualan)}</td> 
                          <td>{inventory.nama_barang}</td>
                          <td>{inventory.qty}</td>
-                         <td>{inventory.subtotal}</td>
-                         <td>{inventory.harga}</td>
+                         <td>{formatCurrency(inventory.harga)}</td>
+                         <td>{formatCurrency(inventory.subtotal)}</td>
                          <td>{inventory.keterangan}</td>
                          <td>
                             <Link to={`Edit/${inventory.id}`} className='button is-small is-info'>edit</Link>

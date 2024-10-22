@@ -28,12 +28,17 @@ const FormEditUser = () => {
             return;
         }
         try {
+            const token = localStorage.getItem('accessToken');
             await axios.patch(`http://localhost:5000/users/${id}`, {
                 name,
                 email,
                 password,
                 confPassword,
                 role
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             });
             navigate("/users");
         } catch (error) {
@@ -46,28 +51,31 @@ const FormEditUser = () => {
     };
     
 
-const getUsersById = async (uuid) => {
-    try {
-        const token = localStorage.getItem("accessToken");
-        const response = await axios.get(`http://localhost:5000/users/${uuid}`,{
-            headers: {
-                Authorization: `Bearer ${token}` 
+    const getUsersById = async () => {
+        try {
+            const token = localStorage.getItem('accessToken');
+            const response = await axios.get(`http://localhost:5000/users/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            
+            if (response.data) {
+                setName(response.data.name); 
+                setEmail(response.data.email);
+                setPassword(response.data.password);
+                setConfPassword(response.data.ConfPassword);
+                setRole(response.data.role);
+            } else {
+                setMsg('Data pengguna tidak ditemukan');
             }
-        });
-        if (response.data) {
-            setName(response.data.name);
-            setEmail(response.data.email);
-            setPassword(response.data.password)
-            setConfPassword(response.data.setConfPassword)
-            setRole(response.data.role);
-        } else {
-            setMsg('User tidak ditemukan');
+        } catch (error) {
+            console.error(error);
+            setMsg('Terjadi kesalahan saat memuat data');
         }
-    } catch (error) {
-        console.error(error);
-        setMsg('Terjadi kesalahan saat memuat data');
-    }
-}
+    };
+    
+
   return (
     <div>
       <h1 className='title'>Users</h1>

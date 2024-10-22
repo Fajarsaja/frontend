@@ -18,7 +18,7 @@ const FormAddUser = () => {
             return;
         }       
         try{
-            const token = localStorage.getItem("accessToken");
+            const token = localStorage.getItem('accessToken'); 
             await axios.post("http://localhost:5000/users",
             {
                name,
@@ -26,9 +26,9 @@ const FormAddUser = () => {
                password,
                confPassword,
                role
-            },{
+            }, {
                 headers: {
-                    Authorization: `Bearer ${token}` 
+                    Authorization: `Bearer ${token}`
                 }
             });
         navigate("/users");
@@ -75,7 +75,7 @@ const FormAddUser = () => {
                                 <div className='control'>
                                    <div className='select is-fullwidth'>
                                         <select value={role} onChange={(e)=> setRole(e.target.value)}>
-                                            <option value="admin">adminn</option>
+                                            <option value="admin">admin</option>
                                             <option value="user">user</option>
                                         </select>
                                    </div>

@@ -20,9 +20,32 @@ const FormEditInventory = () => {
         getInventoryById();
     },[]);
 
+    useEffect(() => {
+        if (qty && harga) {
+            setSubtotal(Number(qty) * Number(harga));
+        } else {
+            setSubtotal(0); 
+        }
+    }, [qty, harga]);
+
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('id-ID').format(value);
+    };
+    
+    const handleHargaChange = (e) => {
+        const input = e.target.value.replace(/\./g, ''); 
+        const numericValue = Number(input);
+        setHarga(numericValue); 
+    };
+    
+   
+    const formattedSubtotal = formatCurrency(subtotal);
+    const displayHarga = formatCurrency(harga)
+
     const updateInventory = async (e) =>{
         e.preventDefault();
         try{
+            const token = localStorage.getItem('accessToken');
             await axios.patch(`http://localhost:5000/t_penjualan/${id}`,{
                 no_penjualan,
                 tgl_penjualan,
@@ -31,6 +54,10 @@ const FormEditInventory = () => {
                 harga,
                 subtotal,
                 keterangan,
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
         });
         navigate("/inventory");
     }  catch(error){
@@ -86,15 +113,17 @@ const FormEditInventory = () => {
                 <div className='field'>
                     <label className='label'>harga </label>
                     <div className='control'>
-                        <input type="number" className="input" placeholder='harga' 
-                         value={harga} onChange={(e) => setHarga(e.target.value)}/>
+                        <input type="text" className="input" placeholder='harga' 
+                          value={displayHarga} 
+                          onChange={handleHargaChange}/>
                     </div>
                 </div>
                 <div className='field'>
                     <label className='label'>subtotal</label>
                     <div className='control'>
-                        <input type="number" className="input" placeholder='subtotal'
-                         value={subtotal} onChange={(e) => setSubtotal(e.target.value)} />
+                        <input type="text" className="input" placeholder='subtotal'
+                         value={formattedSubtotal} 
+                         disabled/>
                     </div>
                 </div>
                 <div className='field'>
