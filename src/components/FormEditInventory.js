@@ -104,28 +104,46 @@ const FormEditInventory = () => {
                     </div>
                 </div>
                 <div className='field'>
-                    <label className='label'>QTY</label>
-                    <div className='control'>
-                        <input type="number" className="input" placeholder='qty'
-                         value={qty} onChange={(e) => setQty(e.target.value)} />
+                <div className='columns is-mobile'>
+                    <div className='column'>
+                        <label className='label'>QTY</label>
+                        <div className='control'>
+                            <input 
+                                type="number" 
+                                className="input" 
+                                placeholder='QTY'
+                                value={qty} 
+                                onChange={(e) => setQty(e.target.value)} 
+                            />
+                        </div>
+                    </div>
+                    <div className='column'>
+                        <label className='label'>Harga</label>
+                        <div className='control'>
+                            <input 
+                                type="text" 
+                                className="input" 
+                                placeholder='Harga' 
+                                value={displayHarga} 
+                                onChange={handleHargaChange}
+                            />
+                        </div>
+                    </div>
+                    <div className='column'>
+                        <label className='label'>Subtotal</label>
+                        <div className='control'>
+                            <input  
+                                type="text"
+                                placeholder='Subtotal'
+                                value={formattedSubtotal}
+                                readOnly
+                                disabled 
+                            />
+                        </div>
                     </div>
                 </div>
-                <div className='field'>
-                    <label className='label'>harga </label>
-                    <div className='control'>
-                        <input type="text" className="input" placeholder='harga' 
-                          value={displayHarga} 
-                          onChange={handleHargaChange}/>
-                    </div>
-                </div>
-                <div className='field'>
-                    <label className='label'>subtotal</label>
-                    <div className='control'>
-                        <input type="text" className="input" placeholder='subtotal'
-                         value={formattedSubtotal} 
-                         disabled/>
-                    </div>
-                </div>
+            </div>
+
                 <div className='field'>
                     <label className='label'>keterangan</label>
                     <div className='control'>
