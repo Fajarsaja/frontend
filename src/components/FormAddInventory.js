@@ -119,72 +119,107 @@ const FormAddInventory = () => {
 
   return (
     <div className="columns mt-5 is-centered">
-        <div className="column is-half">
-            <form onSubmit={saveInventory}>
-                <div className='field'>
-                    <label className='label'>nomor penjualan</label>
-                    <div className='control'>
-                        <input  type="text"
-                                className="input field has-addons"
-                                placeholder='no penjualan'
-                                value={no_penjualan}
-                                onChange={(e) => setNoPenjualan(e.target.value)}
-                                disabled >
-                        </input>
-                    </div>
+    <div className="column is-half">
+        <form onSubmit={saveInventory}>
+            <div className='field'>
+                <label className='label'>Nomor Penjualan</label>
+                <div className='control'>
+                    <input 
+                        type="text"
+                        placeholder='No Penjualan'
+                        value={no_penjualan}
+                        onChange={(e) => setNoPenjualan(e.target.value)}
+                        readOnly
+                        disabled 
+                    />
                 </div>
-                <div className='field'>
-                    <label className='label'>tanggal</label>
-                    <div className='control'>
-                        <input type="date" className="input field has-addons" placeholder='tanggal penjualan'
-                         value={tgl_penjualan} onChange={(e) => setTangal(e.target.value)} />
-                    </div>
+            </div>
+
+            <div className='field'>
+                <label className='label'>Tanggal</label>
+                <div className='control'>
+                    <input 
+                        type="date" 
+                        className="input" 
+                        placeholder='Tanggal Penjualan'
+                        value={tgl_penjualan} 
+                        onChange={(e) => setTangal(e.target.value)} 
+                    />
                 </div>
-                <div className='field'>
-                    <label className='label'>nama barang</label>
-                    <div className='control'>
-                        <input type="text" className="input field has-addons" placeholder='nama barang'
-                         value={nama_barang} onChange={(e) => setNamaBarang(e.target.value)} />
-                    </div>
+            </div>
+
+            <div className='field'>
+                <label className='label'>Nama Barang</label>
+                <div className='control'>
+                    <input 
+                        type="text" 
+                        className="input" 
+                        placeholder='Nama Barang'
+                        value={nama_barang} 
+                        onChange={(e) => setNamaBarang(e.target.value)} 
+                    />
                 </div>
-                <div className='field'>
-                    <label className='label'>QTY</label>
-                    <div className='control'>
-                        <input type="number" className="input field has-addons" placeholder='qty'
-                         value={qty} onChange={(e) => setQty(e.target.value)} />
+            </div> 
+            <div className='field'>
+                <div className='columns is-mobile'>
+                    <div className='column'>
+                        <label className='label'>QTY</label>
+                        <div className='control'>
+                            <input 
+                                type="number" 
+                                className="input" 
+                                placeholder='QTY'
+                                value={qty} 
+                                onChange={(e) => setQty(e.target.value)} 
+                            />
+                        </div>
                     </div>
-                </div>
-                <div className='field'>
-                    <label className='label'>harga </label>
-                    <div className='control'>
-                        <input type="text" className="input field has-addons" placeholder='harga' 
-                         value={displayHarga} 
-                         onChange={handleHargaChange}/>
+                    <div className='column'>
+                        <label className='label'>Harga</label>
+                        <div className='control'>
+                            <input 
+                                type="text" 
+                                className="input" 
+                                placeholder='Harga' 
+                                value={displayHarga} 
+                                onChange={handleHargaChange}
+                            />
+                        </div>
                     </div>
-                </div>
-                <div className='field'>
-                    <label className='label'>subtotal</label>
-                    <div className='control'>
-                        <input  type="text"
-                                className="input field has-addons"
-                                placeholder='subtotal'
+                    <div className='column'>
+                        <label className='label'>Subtotal</label>
+                        <div className='control'>
+                            <input  
+                                type="text"
+                                placeholder='Subtotal'
                                 value={formattedSubtotal}
-                                disabled />
+                                readOnly
+                                disabled 
+                            />
+                        </div>
                     </div>
                 </div>
-                <div className='field'>
-                    <label className='label'>keterangan</label>
-                    <div className='control'>
-                        <input type="text" className="input field has-addons" placeholder='keterangan' 
-                         value={keterangan} onChange={(e) => setKeterangan(e.target.value)}/>
-                    </div>
+            </div>
+
+            <div className='field'>
+                <label className='label'>Keterangan</label>
+                <div className='control'>
+                    <input 
+                        type="text" 
+                        className="input" 
+                        placeholder='Keterangan' 
+                        value={keterangan} 
+                        onChange={(e) => setKeterangan(e.target.value)}
+                    />
                 </div>
-                <div className='field'>
-                   <button type='submit' className='button is-success'>save</button>
-                </div>
-            </form>
-        </div>
+            </div>
+
+            <div className='field'>
+                <button type='submit' className='button is-success'>Save</button>
+            </div>
+        </form>
     </div>
+</div>
   )
 }
 
