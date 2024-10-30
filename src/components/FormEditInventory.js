@@ -26,7 +26,7 @@ const FormEditInventory = () => {
         } else {
             setSubtotal(0); 
         }
-    }, [qty, harga]);
+    }, [qty, harga, tgl_penjualan]);
 
     const formatCurrency = (value) => {
         return new Intl.NumberFormat('id-ID').format(value);
@@ -69,7 +69,8 @@ const FormEditInventory = () => {
     const getInventoryById = async () => {
         const response = await axios.get(`http://localhost:5000/t_penjualan/${id}`)
         setNoPenjualan(response.data.no_penjualan)
-        setTangal(response.data.tgl_penjualan)
+        const formattedDate = new Date(response.data.tgl_penjualan).toISOString().split('T')[0];
+        setTangal(formattedDate);
         setNamaBarang(response.data.nama_barang)
         setQty(response.data.qty)
         setHarga(response.data.harga)
@@ -85,8 +86,13 @@ const FormEditInventory = () => {
                 <div className='field'>
                     <label className='label'>nomor penjualan</label>
                     <div className='control'>
-                        <input type="text" className="input" placeholder='no penjualan'
-                        value={no_penjualan} onChange={(e) => setNoPenjualan(e.target.value)} />
+                        <input 
+                        type="text" 
+                        placeholder='no penjualan'
+                        value={String(no_penjualan).padStart(4, '0')}
+                        onChange={(e) => setNoPenjualan(e.target.value)}   
+                        readOnly
+                        disabled  />
                     </div>
                 </div>
                 <div className='field'>
