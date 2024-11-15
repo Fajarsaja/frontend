@@ -18,14 +18,19 @@ const FormRegisterUser = () => {
             return;
         }
         try {
-            await axios.post(`${process.env.REACT_APP_API_URL}/register`, {
+             const response = await axios.post(`${process.env.REACT_APP_API_URL}/register`, {
                 name,
                 email,
                 password,
                 confPassword,
                 role
             });
-            navigate("/");
+            setMsg(response.data.msg);
+            setName("");
+            setEmail("");
+            setPassword("");
+            setConfPassword("");
+            setRole("");
         } catch (error) {
             setMsg(error.response.data.msg);
         }
@@ -39,7 +44,11 @@ const FormRegisterUser = () => {
                         <div className='column is-6'>
                             <form className='box' onSubmit={registerUser}>
                                 <h1 className='title has-text-centered'>Register</h1>
-                                {msg && <p className="has-text-danger">{msg}</p>}
+                                {msg && (
+                                    <p className='has-text-centered' style={{ color: msg.includes("berhasil") ? "green" : "red" }}>
+                                        {msg}
+                                    </p>
+                                )}
                                 <div className='field'>
                                     <label className='label'>Name</label>
                                     <div className='control'>
