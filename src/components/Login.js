@@ -61,7 +61,6 @@ const Login = () => {
                                         tidak punya akun? register di sini
                                     </NavLink>
                                     </div>
-                                   
                                 </div>
                                 <div className='field mt-5'>
                                     <button className='button is-success is-fullwidth' type='submit'>
