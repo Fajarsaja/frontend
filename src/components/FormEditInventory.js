@@ -46,7 +46,7 @@ const FormEditInventory = () => {
         e.preventDefault();
         try{
             const token = localStorage.getItem('accessToken');
-            await axios.patch(`http://localhost:5000/t_penjualan/${id}`,{
+            await axios.patch(`${process.env.REACT_APP_API_URL}/t_penjualan/${id}`,{
                 no_penjualan,
                 tgl_penjualan,
                 nama_barang,
@@ -67,7 +67,7 @@ const FormEditInventory = () => {
     }
         
     const getInventoryById = async () => {
-        const response = await axios.get(`http://localhost:5000/t_penjualan/${id}`)
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/t_penjualan/${id}`)
         setNoPenjualan(response.data.no_penjualan)
         const formattedDate = new Date(response.data.tgl_penjualan).toISOString().split('T')[0];
         setTangal(formattedDate);

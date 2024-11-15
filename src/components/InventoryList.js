@@ -20,7 +20,7 @@ const InventoryList = () => {
         try {
             const token = localStorage.getItem('accessToken');
             const response = await axios.get(
-                `http://localhost:5000/t_penjualan?search_query=${keyword}&page=${page}&limit=${limit}`,
+                `${process.env.REACT_APP_API_URL}/t_penjualan?search_query=${keyword}&page=${page}&limit=${limit}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -54,7 +54,7 @@ const InventoryList = () => {
     const deleteInventory = async (id) => {
         try {
             const token = localStorage.getItem("accessToken");
-            await axios.delete(`http://localhost:5000/t_penjualan/${id}`, {
+            await axios.delete(`${process.env.REACT_APP_API_URL}/t_penjualan/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

@@ -12,7 +12,7 @@ const Userlist = () => {
   const getUsers = async () => {
     try {
         const token = localStorage.getItem("accessToken");
-        const response = await axios.get("http://localhost:5000/users", {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/users`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -25,7 +25,7 @@ const Userlist = () => {
 
 
   const deleteUser = async (uuid) => {
-        await axios.delete(`http://localhost:5000/users/${uuid}`)  
+        await axios.delete(`${process.env.REACT_APP_API_URL}/users/${uuid}`)  
         getUsers();
 }
 

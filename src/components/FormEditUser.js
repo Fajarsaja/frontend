@@ -29,7 +29,7 @@ const FormEditUser = () => {
         }
         try {
             const token = localStorage.getItem('accessToken');
-            await axios.patch(`http://localhost:5000/users/${id}`, {
+            await axios.patch(`${process.env.REACT_APP_API_URL}/users/${id}`, {
                 name,
                 email,
                 password,
@@ -54,7 +54,7 @@ const FormEditUser = () => {
     const getUsersById = async () => {
         try {
             const token = localStorage.getItem('accessToken');
-            const response = await axios.get(`http://localhost:5000/users/${id}`, {
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

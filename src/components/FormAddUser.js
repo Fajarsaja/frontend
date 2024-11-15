@@ -19,7 +19,7 @@ const FormAddUser = () => {
         }       
         try{
             const token = localStorage.getItem('accessToken'); 
-            await axios.post("http://localhost:5000/users",
+            await axios.post(`${process.env.REACT_APP_API_URL}/users`,
             {
                name,
                email,

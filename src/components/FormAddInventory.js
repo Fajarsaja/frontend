@@ -19,7 +19,7 @@ const FormAddInventory = () => {
         const getNewNoPenjualan = async () => {
             try {
                 const token = localStorage.getItem('accessToken');
-                const response = await axios.get('http://localhost:5000/new_no_penjualan', {
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/new_no_penjualan`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -61,7 +61,7 @@ const FormAddInventory = () => {
     const checkNoPenjualanExists = async (noPenjualan) => {
         try {
             const token = localStorage.getItem('accessToken'); 
-            const response = await axios.get(`http://localhost:5000/t_penjualan/check/${noPenjualan}`, {
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/t_penjualan/check/${noPenjualan}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -91,7 +91,7 @@ const FormAddInventory = () => {
         try {
             const token = localStorage.getItem('accessToken'); 
             await axios.post(
-                "http://localhost:5000/t_penjualan",
+                `${process.env.REACT_APP_API_URL}/t_penjualan`,
                 {
                     no_penjualan,
                     tgl_penjualan,
