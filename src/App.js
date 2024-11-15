@@ -7,6 +7,7 @@ import AddUser from "./pages/AddUser";
 import EditUser from "./pages/EditUser";
 import AddInventory from "./pages/AddInventory";
 import EditInventory from "./pages/EditInventory";
+import Register from "./pages/Register";
 
 
 
@@ -15,6 +16,7 @@ function App() {
     <BrowserRouter>
       <Routes>
          <Route path="/" element={<Login/>}/> 
+         <Route path="/Register" element={<Register/>}/> 
          <Route path="/users" element={<User/>}/> 
          <Route path="/users/add" element={<AddUser/>}/> 
          <Route path="/users/edit/:id" element={<EditUser/>}/> 
